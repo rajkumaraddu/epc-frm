@@ -42,14 +42,14 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = null;
         String userName = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("epc#frm ")) {
             token = authorizationHeader.substring(7);
             userName = jwtUtil.extractUsername(token);
         }
 
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            UserDetails userDetails = service.loadUserByUsername(userName);
+            UserDetails userDetails = service.loadUserByUsername("auth@"+userName);
 
             if (jwtUtil.validateToken(token, userDetails)) {
 
