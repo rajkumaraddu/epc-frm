@@ -26,7 +26,7 @@ public class StateMasterEntity extends BaseEntity {
 	@Column(length = 100)
 	private String stateName;
 	private int gstCode;
-	@Column(length = 10)
+	@Column(length = 15)
 	private String stateOrUT;
 	@Column(length = 1)
 	private String activeStatus;
