@@ -31,10 +31,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserMasterEntity user = userRepo.findByMobile(username);
-		logger.info(user.getMobile() + " >>>> " + user.getPassword());
-		if(LocalDateTime.now().isAfter(user.getPwdValidity())) {
-			return new org.springframework.security.core.userdetails.User(user.getMobile(), null,
+		if (username.contains("auth@")) {
+			user = userRepo.findByMobile(username.substring(5));
+			return new org.springframework.security.core.userdetails.User(user.getMobile(), user.getPassword(),
 					new ArrayList<>());
+		}
+		if (LocalDateTime.now().isAfter(user.getPwdValidity())) {
+			return new org.springframework.security.core.userdetails.User(user.getMobile(), null, new ArrayList<>());
 		}
 		return new org.springframework.security.core.userdetails.User(user.getMobile(), user.getPassword(),
 				new ArrayList<>());
