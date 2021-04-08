@@ -14,6 +14,11 @@ import com.mahindra.epcfrm.entity.UserMasterEntity;
  */
 @Repository
 public interface UserMasterRepo extends JpaRepository<UserMasterEntity, Integer> {
-	UserMasterEntity findByUserIdOrTokenNo(String username,String tokenNo);
+
+	/**
+	 * @param mobile
+	 * @return
+	 */
+	public UserMasterEntity findByMobile(String mobile);
 
 }

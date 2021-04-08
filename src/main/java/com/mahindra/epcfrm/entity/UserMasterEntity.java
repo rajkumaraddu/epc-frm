@@ -3,6 +3,7 @@
  */
 package com.mahindra.epcfrm.entity;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,7 @@ public class UserMasterEntity extends BaseEntity {
 	private String userId;
 	@Column(length = 50)
 	private String password;
+	private LocalDateTime pwdValidity;
 	@Column(length = 50)
 	private String tokenNo;
 	@Column(length = 100)
@@ -150,6 +152,14 @@ public class UserMasterEntity extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public LocalDateTime getPwdValidity() {
+		return pwdValidity;
+	}
+
+	public void setPwdValidity(LocalDateTime pwdValidity) {
+		this.pwdValidity = pwdValidity;
 	}
 
 }

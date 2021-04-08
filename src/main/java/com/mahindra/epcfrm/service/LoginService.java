@@ -3,7 +3,7 @@
  */
 package com.mahindra.epcfrm.service;
 
-import com.mahindra.epcfrm.entity.ApiResponseDto;
+import com.mahindra.epcfrm.dto.ApiResponseDto;
 
 /**
  * @author Raju.Addu

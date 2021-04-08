@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mahindra.epcfrm.entity;
+package com.mahindra.epcfrm.dto;
 
 import java.io.Serializable;
 
@@ -17,7 +17,8 @@ public class ApiResponseDto implements Serializable {
 	private static final long serialVersionUID = 3692733483653598722L;
 
 	private String status;
-	private String tokenId;
+	private int statusCode;
+	//private String tokenId;
 	private String mobile;
 	private String otp;
 	private String otpValidity;
@@ -26,20 +27,22 @@ public class ApiResponseDto implements Serializable {
 	
 	public ApiResponseDto() { }
 
-	public ApiResponseDto(String status, String tokenId, String mobile, String message) {
+	public ApiResponseDto(String status,int statusCode, String tokenId, String mobile, String message) {
 		super();
 		this.status = status;
-		this.tokenId = tokenId;
+		this.statusCode = statusCode;
+		//this.tokenId = tokenId;
 		this.mobile = mobile;
 		this.message = message;
 		this.otp = "";
 		this.otpValidity = "";
 	}
 
-	public ApiResponseDto(String status, String tokenId, String mobile, String otp, String otpValidity, String message) {
+	public ApiResponseDto(String status,int statusCode, String tokenId, String mobile, String otp, String otpValidity, String message) {
 		super();
 		this.status = status;
-		this.tokenId = tokenId;
+		this.statusCode = statusCode;
+		//this.tokenId = tokenId;
 		this.mobile = mobile;
 		this.otp = otp;
 		this.otpValidity = otpValidity;
@@ -52,14 +55,6 @@ public class ApiResponseDto implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public String getTokenId() {
-		return tokenId;
-	}
-
-	public void setTokenId(String tokenId) {
-		this.tokenId = tokenId;
 	}
 
 	public String getMobile() {
@@ -96,7 +91,7 @@ public class ApiResponseDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ApiResponseDto [status=" + status + ", tokenId=" + tokenId + ", mobile=" + mobile+ ", otp=" + otp
+		return "ApiResponseDto [status=" + status + ", mobile=" + mobile+ ", otp=" + otp
 				+ ", otpValidity=" + otpValidity + ", message=" + message + "]";
 	}
 

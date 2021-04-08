@@ -1,17 +1,17 @@
 /**
  * 
  */
-package com.mahindra.epcfrm.entity;
+package com.mahindra.epcfrm.dto;
 
 /**
  * @author Raju.Addu
  *
  */
 
-public class AuthRequest {
+public class AuthRequestDto {
 
-	private String userName;
-	private String password;
+	private String userName; //mobile number.
+	private String password; //OTP
 
 	public String getUserName() {
 		return userName;
