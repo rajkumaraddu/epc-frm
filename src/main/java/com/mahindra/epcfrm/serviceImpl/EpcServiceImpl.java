@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mahindra.epcfrm.service;
+package com.mahindra.epcfrm.serviceImpl;
 
 /**
  * @author Raju.Addu

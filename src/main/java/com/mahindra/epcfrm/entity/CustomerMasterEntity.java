@@ -24,7 +24,7 @@ public class CustomerMasterEntity extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	@Column(length = 50)
-	private String customerNo;
+	private String customerId;
 	@Column(length = 50)
 	private String firstName;
 	@Column(length = 50)
@@ -33,24 +33,36 @@ public class CustomerMasterEntity extends BaseEntity {
 	private String lastName;
 	@Column(length = 150)
 	private String fullName;
-	@Column(length = 100)
-	private String email;
-	@Column(length = 20)
-	private String mobile;
-	@Column(length = 50)
-	private String fathersName;
-	@Column(length = 50)
-	private String mothersName;
-	@Column(length = 50)
+	
+	@Column(length = 150)
+	private String emailId;
+	
+	@Column(length = 150)
+	private String fatherName;
+	
+	@Column(length = 150)
+	private String motherName;
+	
+	
+	@Column(length = 150)
 	private String asm;
-	@Column(length = 50)
-	private String dealer;
+	
+	@Column(length = 150)
+	private String dealerName;
+	
+	@Column(length = 150)
+	private String dealerCode;
+	
+	
+	@Column(length = 20)
+	private Long contactNumber;
+	
 	@Column(length = 50)
 	private String corrAddressNo; // correspondenceAddressNo
 	@Column(length = 50)
 	private String farmAddressNo;
 	@Column(length = 50)
-	private String sapFarmerCode;
+	private String sapFarmerCode;//sapFarmerCode
 	@Column(length = 1)
 	private String activeStatus;
 
@@ -61,15 +73,6 @@ public class CustomerMasterEntity extends BaseEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getCustomerNo() {
-		return customerNo;
-	}
-
-	public void setCustomerNo(String customerNo) {
-		this.customerNo = customerNo;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -102,6 +105,14 @@ public class CustomerMasterEntity extends BaseEntity {
 		this.fullName = fullName;
 	}
 
+	public Long getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(Long contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+
 	public String getCorrAddressNo() {
 		return corrAddressNo;
 	}
@@ -126,4 +137,73 @@ public class CustomerMasterEntity extends BaseEntity {
 		this.activeStatus = activeStatus;
 	}
 
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public String getFatherName() {
+		return fatherName;
+	}
+
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
+	public String getMotherName() {
+		return motherName;
+	}
+
+	public void setMotherName(String motherName) {
+		this.motherName = motherName;
+	}
+
+	public String getAsm() {
+		return asm;
+	}
+
+	public void setAsm(String asm) {
+		this.asm = asm;
+	}
+
+	public String getDealerName() {
+		return dealerName;
+	}
+
+	public void setDealerName(String dealerName) {
+		this.dealerName = dealerName;
+	}
+
+	public String getDealerCode() {
+		return dealerCode;
+	}
+
+	public void setDealerCode(String dealerCode) {
+		this.dealerCode = dealerCode;
+	}
+
+	public String getSapFarmerCode() {
+		return sapFarmerCode;
+	}
+
+	public void setSapFarmerCode(String sapFarmerCode) {
+		this.sapFarmerCode = sapFarmerCode;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }
