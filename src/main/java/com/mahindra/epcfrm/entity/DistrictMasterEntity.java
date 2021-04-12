@@ -25,12 +25,17 @@ public class DistrictMasterEntity extends BaseEntity implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
 	private int districtCode;
+	
 	@Column(length = 100)
 	private String districtName;
+	
 	private int stateCode;
+	
 	@Column(length = 10)
 	private String distShortName;
+	
 	@Column(length = 1)
 	private String activeStatus;
 

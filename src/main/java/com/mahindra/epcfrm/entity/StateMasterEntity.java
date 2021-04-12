@@ -71,4 +71,17 @@ public class StateMasterEntity extends BaseEntity {
 		this.activeStatus = activeStatus;
 	}
 
+	public String getStateOrUT() {
+		return stateOrUT;
+	}
+
+	public void setStateOrUT(String stateOrUT) {
+		this.stateOrUT = stateOrUT;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+
 }

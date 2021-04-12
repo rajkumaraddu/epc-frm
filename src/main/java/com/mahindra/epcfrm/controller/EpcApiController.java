@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,13 +19,21 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mahindra.epcfrm.entity.CityMasterEntity;
 import com.mahindra.epcfrm.entity.CropMasterEntity;
+import com.mahindra.epcfrm.entity.DistrictMasterEntity;
 import com.mahindra.epcfrm.entity.LeadMasterEntity;
 import com.mahindra.epcfrm.entity.StateMasterEntity;
+import com.mahindra.epcfrm.dto.CityRequestDto;
+import com.mahindra.epcfrm.dto.DistrictRequestDto;
 import com.mahindra.epcfrm.dto.LeadMasterDto;
 import com.mahindra.epcfrm.dto.LeadSearchDto;
+import com.mahindra.epcfrm.dto.MasterResponseDto;
 import com.mahindra.epcfrm.dto.ResponseDto;
+import com.mahindra.epcfrm.service.CityMasterService;
 import com.mahindra.epcfrm.service.CropMasterService;
+import com.mahindra.epcfrm.service.DistrictMasterService;
+import com.mahindra.epcfrm.service.EpcService;
 import com.mahindra.epcfrm.service.LeadMasterService;
 import com.mahindra.epcfrm.service.StateMasterService;
 
@@ -42,19 +49,23 @@ public class EpcApiController {
 
 	@Autowired
 	LeadMasterService leadMasterService;
-
 	@Autowired
 	StateMasterService stateMasterService;
-
 	@Autowired
 	CropMasterService cropMasterService;
-
+	@Autowired
+	EpcService epcService;
+	@Autowired
+	DistrictMasterService districtMasterService;
+	@Autowired
+	CityMasterService cityMasterService;
+	
 	@GetMapping("getLead")
 	public String getLead() {
 		return "lead generated";
 	}
 	@GetMapping("/")
-	private String getWelcome() {
+	public String getWelcome() {
 		return "Welcome to EPC!";
 	}
 
@@ -123,6 +134,41 @@ public class EpcApiController {
 		res.setMessage("Successful crops fetched");
 		res.setSuccess(true);
 		return res;
+	}
+	
+	@PostMapping(value = "getDistricts")
+	public ResponseDto getDistricts(@RequestBody DistrictRequestDto reqDto) throws Exception {
+		log.info("request processing of getDistricts");
+		ResponseDto res = new ResponseDto();
+		List<DistrictMasterEntity> districtsByStateWise = districtMasterService.getDistrictsByStateWise(reqDto.getStateCode());
+		res.setData(districtsByStateWise);
+		res.setStatus(200);
+		res.setMessage("Successful districts fetched");
+		res.setSuccess(true);
+		return res;
+	}
+	
+	
+	@PostMapping(value = "getAllCities")
+	public ResponseDto getAllCities(@RequestBody CityRequestDto reqDto) throws Exception {
+		log.info("request processing of getAllCities");
+		ResponseDto res = new ResponseDto();
+		List<CityMasterEntity> allCities = cityMasterService.getAllCities(reqDto);
+		res.setData(allCities);
+		res.setStatus(200);
+		res.setMessage("Successful cities fetched");
+		res.setSuccess(true);
+		return res;
+	}
+	
+	@GetMapping("getAllDealers")
+	public MasterResponseDto getAllDealers() {
+		return epcService.getAllDealers();
+	}
+	
+	@GetMapping("getSubsidy")
+	public MasterResponseDto getSubsidy(@RequestParam int stateCode) {
+		return epcService.getSubsidy(stateCode);
 	}
 
 }
