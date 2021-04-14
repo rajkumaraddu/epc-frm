@@ -21,6 +21,7 @@ import com.mahindra.epcfrm.entity.KYCMasterEntity;
 import com.mahindra.epcfrm.entity.LeadMasterEntity;
 import com.mahindra.epcfrm.dto.LeadMasterDto;
 import com.mahindra.epcfrm.dto.LeadSearchDto;
+import com.mahindra.epcfrm.dto.MasterResponseDto;
 import com.mahindra.epcfrm.exception.DataNotFoundException;
 import com.mahindra.epcfrm.exception.FileStorageException;
 import com.mahindra.epcfrm.exception.ResourceAlreadyExistsException;
@@ -42,14 +43,14 @@ public class LeadMasterServiceImpl implements LeadMasterService {
 	private final Path root = Paths.get("uploads");
 
 	@Override
-	public LeadMasterEntity leadCreation(LeadMasterDto leadMasterDTO, MultipartFile farmerPhoto,
+	public MasterResponseDto leadCreation(LeadMasterDto leadMasterDTO, MultipartFile farmerPhoto,
 			MultipartFile waterTestDoc, MultipartFile soilTestDoc, MultipartFile bankDoc, MultipartFile aadharCard,
 			MultipartFile rationCard, MultipartFile patta, MultipartFile chitta, MultipartFile surveyCaptureImage,
 			MultipartFile gpsCaptureImage, MultipartFile otherDoc, MultipartFile attachment1,
 			MultipartFile attachmentSurvey2, MultipartFile[] instReportPhoto, MultipartFile instReportVideo,
 			MultipartFile[] deliverChalan) {
 		log.info("inside leadcreation service starts");
-
+        MasterResponseDto leadCreationRes=new MasterResponseDto();
 		Optional<CustomerMasterEntity> farmerData = customerMasterRepo
 				.findByEmailId(leadMasterDTO.getFarmerId().getEmailId());
 		if (farmerData.isPresent()) {
@@ -175,8 +176,11 @@ public class LeadMasterServiceImpl implements LeadMasterService {
 			}
 			leadMasterEntity.setKycId(kyc);
 			LeadMasterEntity lead = leadMasterRepo.save(leadMasterEntity);
+			leadCreationRes.setStatusCode(0);
+			leadCreationRes.setMessage("success");
+			leadCreationRes.setData(lead);
 			log.info("inside leadcreation service ended");
-			return lead;
+			return leadCreationRes;
 		}
 	}
 
@@ -205,16 +209,23 @@ public class LeadMasterServiceImpl implements LeadMasterService {
 	}
 
 	@Override
-	public LeadMasterEntity leadSearch(LeadSearchDto searchDTO) throws Exception {
+	public MasterResponseDto leadSearch(LeadSearchDto searchDTO) throws Exception {
 		log.info("inside leadSearch service");
 		log.debug("inside leadSearch service");
+		MasterResponseDto leadSearchRes=new MasterResponseDto();
 		Optional<CustomerMasterEntity> farmerData = customerMasterRepo
 				.findByContactNumberAndEmailId(searchDTO.getContactNumber(), searchDTO.getEmailId());
 		Optional<LeadMasterEntity> leadData = leadMasterRepo.findByFarmerId(farmerData.get());
 		if (leadData.isPresent()) {
-			return leadData.get();
+			leadSearchRes.setStatusCode(0);
+			leadSearchRes.setMessage("success");
+			leadSearchRes.setData(leadData.get());
+			return leadSearchRes;
 		} else {
-			throw new DataNotFoundException("This leadData not found");
+			leadSearchRes.setStatusCode(1);
+			leadSearchRes.setMessage("Lead data not available");
+			leadSearchRes.setData(null);
+			return leadSearchRes;
 		}
 	}
 }

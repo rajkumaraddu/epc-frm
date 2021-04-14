@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.mahindra.epcfrm.entity.CityMasterEntity;
 import com.mahindra.epcfrm.entity.CropMasterEntity;
 import com.mahindra.epcfrm.entity.DistrictMasterEntity;
@@ -53,25 +50,29 @@ public class EpcApiController {
 	StateMasterService stateMasterService;
 	@Autowired
 	CropMasterService cropMasterService;
-	@Autowired
-	EpcService epcService;
+
 	@Autowired
 	DistrictMasterService districtMasterService;
+
 	@Autowired
 	CityMasterService cityMasterService;
-	
+
+	@Autowired
+	EpcService epcService;
+
 	@GetMapping("getLead")
 	public String getLead() {
 		return "lead generated";
 	}
+
 	@GetMapping("/")
 	public String getWelcome() {
 		return "Welcome to EPC!";
 	}
 
 	// @PostMapping(value = "lead/creation")
-	@PostMapping(value = "lead/creation",produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseDto leadCreation(@RequestPart LeadMasterDto leadMasterDTO,
+	@PostMapping(value = "lead/creation", produces = MediaType.APPLICATION_JSON_VALUE)
+	public MasterResponseDto leadCreation(@RequestPart LeadMasterDto leadMasterDTO,
 			@RequestPart(value = "farmerPhoto", required = false) MultipartFile farmerPhoto,
 			@RequestPart(value = "waterTestDoc", required = false) MultipartFile waterTestDoc,
 			@RequestPart(value = "soilTestDoc", required = false) MultipartFile soilTestDoc,
@@ -89,83 +90,53 @@ public class EpcApiController {
 			@RequestPart(value = "instReportVideo", required = false) MultipartFile instReportVideo,
 			@RequestPart(value = "deliveryChalan", required = false) MultipartFile[] deliveryChalan) {
 		log.info("request processing leadCreation");
-		ResponseDto res = new ResponseDto();
-		LeadMasterEntity leadCreation = leadMasterService.leadCreation(leadMasterDTO, farmerPhoto, waterTestDoc,
+		return leadMasterService.leadCreation(leadMasterDTO, farmerPhoto, waterTestDoc,
 				soilTestDoc, bankDoc, aadharCard, rationCard, patta, chitta, surveyCaptureImage, gpsCaptureImage,
-				otherDoc, attachment1, attachmentSurvey2, instReportPhotos, instReportVideo,deliveryChalan);
-		res.setData(leadCreation);
-		res.setStatus(200);
-		res.setSuccess(true);
-		res.setMessage("Success fully lead generated");
-		return res;
+				otherDoc, attachment1, attachmentSurvey2, instReportPhotos, instReportVideo, deliveryChalan);
 	}
 
 	@PostMapping(value = "leadSearch")
-	public ResponseDto leadSearch(@RequestBody LeadSearchDto leadSearchDTO) throws Exception {
+	public MasterResponseDto leadSearch(@RequestBody LeadSearchDto leadSearchDTO) throws Exception {
 		log.info("request processing of leadSearch");
-		LeadMasterEntity leadSearch = leadMasterService.leadSearch(leadSearchDTO);
-		ResponseDto res = new ResponseDto();
-		res.setData(leadSearch);
-		res.setStatus(200);
-		res.setMessage("Successful lead fetched");
-		res.setSuccess(true);
-		return res;
+		return leadMasterService.leadSearch(leadSearchDTO);
 	}
 
 	@GetMapping(value = "getAllStates")
-	public ResponseDto getAllStates() throws Exception {
+	public MasterResponseDto getAllStates() throws Exception {
 		log.info("request processing of getAllStates");
-		ResponseDto res = new ResponseDto();
-		List<StateMasterEntity> allStates = stateMasterService.getAllStates();
-		res.setData(allStates);
-		res.setStatus(200);
-		res.setMessage("Successful states fetched");
-		res.setSuccess(true);
-		return res;
+		return stateMasterService.getAllStates();
 	}
 
 	@GetMapping(value = "getAllCrops")
-	public ResponseDto getAllCrops() throws Exception {
+	public MasterResponseDto getAllCrops() throws Exception {
 		log.info("request processing of getAllCrops");
-		ResponseDto res = new ResponseDto();
-		List<CropMasterEntity> allCrops = cropMasterService.getAllCrops();
-		res.setData(allCrops);
-		res.setStatus(200);
-		res.setMessage("Successful crops fetched");
-		res.setSuccess(true);
-		return res;
+		return cropMasterService.getAllCrops();
 	}
-	
+
 	@PostMapping(value = "getDistricts")
-	public ResponseDto getDistricts(@RequestBody DistrictRequestDto reqDto) throws Exception {
+	public MasterResponseDto getDistricts(@RequestBody DistrictRequestDto reqDto) throws Exception {
 		log.info("request processing of getDistricts");
-		ResponseDto res = new ResponseDto();
-		List<DistrictMasterEntity> districtsByStateWise = districtMasterService.getDistrictsByStateWise(reqDto.getStateCode());
-		res.setData(districtsByStateWise);
-		res.setStatus(200);
-		res.setMessage("Successful districts fetched");
-		res.setSuccess(true);
-		return res;
+		return districtMasterService.getDistrictsByStateWise(reqDto.getStateCode());
 	}
-	
-	
-	@PostMapping(value = "getAllCities")
-	public ResponseDto getAllCities(@RequestBody CityRequestDto reqDto) throws Exception {
+
+	@PostMapping(value = "getCitiesByStateCode")
+	public MasterResponseDto getCitiesByStateCode(@RequestBody CityRequestDto reqDto) throws Exception {
 		log.info("request processing of getAllCities");
-		ResponseDto res = new ResponseDto();
-		List<CityMasterEntity> allCities = cityMasterService.getAllCities(reqDto);
-		res.setData(allCities);
-		res.setStatus(200);
-		res.setMessage("Successful cities fetched");
-		res.setSuccess(true);
-		return res;
+		return cityMasterService.getCitiesByStateCode(reqDto);
+
 	}
-	
+
+	@GetMapping(value = "getAllCities")
+	public MasterResponseDto getAllCities() throws Exception {
+		log.info("request processing of getAllCities");
+		return cityMasterService.getAllCities();
+	}
+
 	@GetMapping("getAllDealers")
 	public MasterResponseDto getAllDealers() {
 		return epcService.getAllDealers();
 	}
-	
+
 	@GetMapping("getSubsidy")
 	public MasterResponseDto getSubsidy(@RequestParam int stateCode) {
 		return epcService.getSubsidy(stateCode);

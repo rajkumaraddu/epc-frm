@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mahindra.epcfrm.dto.MasterResponseDto;
+import com.mahindra.epcfrm.entity.DistrictMasterEntity;
 import com.mahindra.epcfrm.entity.StateMasterEntity;
 import com.mahindra.epcfrm.exception.DataNotFoundException;
 import com.mahindra.epcfrm.repository.StateMasterRepo;
@@ -21,14 +23,20 @@ public class StateMasterServiceImpl implements StateMasterService {
 	StateMasterRepo stateMasterRepo;
 
 	@Override
-	public List<StateMasterEntity> getAllStates() {
+	public MasterResponseDto getAllStates() {
 		log.info("inside getAllStates service");
 		log.debug("inside getAllStates service");
+		MasterResponseDto masterRes = new MasterResponseDto();
 		List<StateMasterEntity> listOfStates = (List<StateMasterEntity>) stateMasterRepo.findAll();
-		if (listOfStates.size() != 0) {
-			return listOfStates;
+		if (listOfStates.isEmpty()) {
+			masterRes.setStatusCode(1);
+			masterRes.setMessage("States not available");
+			masterRes.setData(null);
 		} else {
-			throw new DataNotFoundException("States data not available");
+			masterRes.setStatusCode(0);
+			masterRes.setMessage("success");
+			masterRes.setData(listOfStates);
 		}
+		return masterRes;
 	}
 }

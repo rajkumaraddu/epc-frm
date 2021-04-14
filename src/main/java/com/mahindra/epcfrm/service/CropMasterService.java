@@ -1,10 +1,8 @@
 package com.mahindra.epcfrm.service;
 
-import java.util.List;
-
-import com.mahindra.epcfrm.entity.CropMasterEntity;
+import com.mahindra.epcfrm.dto.MasterResponseDto;
 
 public interface CropMasterService {
 
-	List<CropMasterEntity> getAllCrops();
+	MasterResponseDto getAllCrops();
 }

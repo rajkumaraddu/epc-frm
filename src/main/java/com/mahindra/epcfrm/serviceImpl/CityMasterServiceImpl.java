@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mahindra.epcfrm.dto.CityRequestDto;
+import com.mahindra.epcfrm.dto.MasterResponseDto;
 import com.mahindra.epcfrm.entity.CityMasterEntity;
 import com.mahindra.epcfrm.exception.DataNotFoundException;
 import com.mahindra.epcfrm.repository.CityMasterRepo;
@@ -22,14 +23,38 @@ public class CityMasterServiceImpl implements CityMasterService {
 	CityMasterRepo cityMasterRepo;
 
 	@Override
-	public List<CityMasterEntity> getAllCities(CityRequestDto reqDto) {
+	public MasterResponseDto getAllCities() {
 		log.info("inside getAllCites service");
 		log.debug("inside getAllCites service");
-		List<CityMasterEntity> citiesList = cityMasterRepo.findByStateCode(reqDto.getStateCode());
-		if (citiesList.size() != 0) {
-			return citiesList;
+		MasterResponseDto citiesResp = new MasterResponseDto();
+		List<CityMasterEntity> citiesList = cityMasterRepo.findAll();
+		if (citiesList.isEmpty()) {
+			citiesResp.setStatusCode(1);
+			citiesResp.setMessage("Cities not available");
+			citiesResp.setData(null);	
 		} else {
-			throw new DataNotFoundException("Cities data not available");
+			citiesResp.setStatusCode(0);
+			citiesResp.setMessage("success");
+			citiesResp.setData(citiesList);	
 		}
+		return citiesResp;
+	}
+
+	@Override
+	public MasterResponseDto getCitiesByStateCode(CityRequestDto reqDto) {
+		log.info("inside getCitiesByStateCode service");
+		log.debug("inside getCitiesByStateCode service");
+		MasterResponseDto citiesResp = new MasterResponseDto();
+		List<CityMasterEntity> citiesList = cityMasterRepo.findByStateCode(reqDto.getStateCode());
+		if (citiesList.isEmpty()) {
+			citiesResp.setStatusCode(1);
+			citiesResp.setMessage("Cities not available");
+			citiesResp.setData(null);	
+		} else {
+			citiesResp.setStatusCode(0);
+			citiesResp.setMessage("success");
+			citiesResp.setData(citiesList);	
+		}
+		return citiesResp;
 	}
 }

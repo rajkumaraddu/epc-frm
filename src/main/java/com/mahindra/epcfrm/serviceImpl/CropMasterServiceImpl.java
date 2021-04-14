@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mahindra.epcfrm.dto.MasterResponseDto;
+import com.mahindra.epcfrm.entity.CityMasterEntity;
 import com.mahindra.epcfrm.entity.CropMasterEntity;
 import com.mahindra.epcfrm.exception.DataNotFoundException;
 import com.mahindra.epcfrm.repository.CropMasterRepo;
@@ -21,14 +23,20 @@ public class CropMasterServiceImpl implements CropMasterService {
 	CropMasterRepo cropMasterRepo;
 
 	@Override
-	public List<CropMasterEntity> getAllCrops() {
+	public MasterResponseDto getAllCrops() {
 		log.info("inside getAllCrops service");
 		log.debug("inside getAllCrops service");
+		MasterResponseDto masterRes = new MasterResponseDto();
 		List<CropMasterEntity> listOfCrops = (List<CropMasterEntity>) cropMasterRepo.findAll();
-		if (listOfCrops.size() != 0) {
-			return listOfCrops;
+		if (listOfCrops.isEmpty()) {
+			masterRes.setStatusCode(1);
+			masterRes.setMessage("Crop not available");
+			masterRes.setData(null);	
 		} else {
-			throw new DataNotFoundException("Crops data not available");
+			masterRes.setStatusCode(0);
+			masterRes.setMessage("success");
+			masterRes.setData(listOfCrops);	
 		}
+		return masterRes;
 	}
 }

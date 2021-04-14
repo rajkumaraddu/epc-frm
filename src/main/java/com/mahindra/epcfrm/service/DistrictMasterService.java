@@ -1,10 +1,8 @@
 package com.mahindra.epcfrm.service;
 
-import java.util.List;
-
-import com.mahindra.epcfrm.entity.DistrictMasterEntity;
+import com.mahindra.epcfrm.dto.MasterResponseDto;
 
 public interface DistrictMasterService {
 
-	List<DistrictMasterEntity> getDistrictsByStateWise(int stateCode);
+	MasterResponseDto getDistrictsByStateWise(int stateCode);
 }

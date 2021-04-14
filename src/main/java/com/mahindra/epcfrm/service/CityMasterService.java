@@ -1,11 +1,11 @@
 package com.mahindra.epcfrm.service;
 
-import java.util.List;
-
 import com.mahindra.epcfrm.dto.CityRequestDto;
-import com.mahindra.epcfrm.entity.CityMasterEntity;
+import com.mahindra.epcfrm.dto.MasterResponseDto;
 
 public interface CityMasterService {
  
-	List<CityMasterEntity> getAllCities(CityRequestDto reqDto);
+	MasterResponseDto getAllCities();
+	MasterResponseDto getCitiesByStateCode(CityRequestDto reqDto);
+
 }
