@@ -2,7 +2,6 @@ package com.mahindra.epcfrm.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mahindra.epcfrm.entity.LeadMasterEntity;
 import com.mahindra.epcfrm.dto.LeadMasterDto;
 import com.mahindra.epcfrm.dto.LeadSearchDto;
 import com.mahindra.epcfrm.dto.MasterResponseDto;

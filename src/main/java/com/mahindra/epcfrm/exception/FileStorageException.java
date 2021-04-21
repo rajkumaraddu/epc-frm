@@ -1,7 +1,12 @@
 package com.mahindra.epcfrm.exception;
 
 public class FileStorageException extends RuntimeException {
-    public FileStorageException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1587623587738731492L;
+
+	public FileStorageException(String message) {
         super(message);
     }
 

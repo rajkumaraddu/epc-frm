@@ -54,6 +54,7 @@ public class CustomerMasterEntity extends BaseEntity {
 	private String dealerCode;
 	
 	
+	
 	@Column(length = 20)
 	private Long contactNumber;
 	

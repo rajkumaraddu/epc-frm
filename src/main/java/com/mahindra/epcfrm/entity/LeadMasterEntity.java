@@ -51,10 +51,18 @@ public class LeadMasterEntity extends BaseEntity {
 	private String govtPortalRegNo;
 	@Column(length = 50)
 	private String regStatusOnGovtPortal;//
+	
+	//status
 	@Column(length = 50)
 	private String workOrderStatus;
 	@Column(length = 50)
 	private String workOrderNo;
+	
+	@Column(length = 50)
+	private String kycStatus;
+	@Column(length = 50)
+	private String quotationStatus;
+	
 	@Column(length = 50)
 	private String manualApprovalTriggered;
 	@Column(length = 50)
@@ -67,6 +75,8 @@ public class LeadMasterEntity extends BaseEntity {
 	private String asmId;
 	@Column(length = 50)
 	private String dealerUserId;
+	
+	
 	@Column(length = 50)
 	private String onlinePortalStatus;
 	@Column(length = 50)
@@ -90,6 +100,10 @@ public class LeadMasterEntity extends BaseEntity {
 	// kyc new entity
 	@OneToOne(cascade = CascadeType.ALL)
 	private KYCMasterEntity kycId;
+	
+	@Column(length = 15)
+	private Long userMobile;//
+	
 
 	// status
 	@OneToMany(cascade = CascadeType.ALL)
@@ -389,5 +403,30 @@ public class LeadMasterEntity extends BaseEntity {
 	public void setTimeStamp(String timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+
+	public String getKycStatus() {
+		return kycStatus;
+	}
+
+	public void setKycStatus(String kycStatus) {
+		this.kycStatus = kycStatus;
+	}
+
+	public String getQuotationStatus() {
+		return quotationStatus;
+	}
+
+	public void setQuotationStatus(String quotationStatus) {
+		this.quotationStatus = quotationStatus;
+	}
+
+	public Long getUserMobile() {
+		return userMobile;
+	}
+
+	public void setUserMobile(Long userMobile) {
+		this.userMobile = userMobile;
+	}
+	
 
 }

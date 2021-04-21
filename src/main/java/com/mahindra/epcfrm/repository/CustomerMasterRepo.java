@@ -1,13 +1,14 @@
 package com.mahindra.epcfrm.repository;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.mahindra.epcfrm.entity.CustomerMasterEntity;
 
-public interface CustomerMasterRepo extends CrudRepository<CustomerMasterEntity, Integer> {
+@Repository
+public interface CustomerMasterRepo extends JpaRepository<CustomerMasterEntity, Integer> {
 
 	Optional<CustomerMasterEntity> findByContactNumberAndEmailId(Long contactNumber,String emailId);
 	

@@ -2,23 +2,14 @@ package com.mahindra.epcfrm.dto;
 
 public class LeadSearchDto {
 
-	private Long contactNumber;
-	private String emailId;
+	private Long userMobile;
+	//private String emailId;
 
-	public Long getContactNumber() {
-		return contactNumber;
+	public Long getUserMobile() {
+		return userMobile;
 	}
 
-	public void setContactNumber(Long contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setUserMobile(Long userMobile) {
+		this.userMobile = userMobile;
 	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
 }

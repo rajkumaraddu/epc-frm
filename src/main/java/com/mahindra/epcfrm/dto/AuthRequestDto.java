@@ -3,11 +3,14 @@
  */
 package com.mahindra.epcfrm.dto;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author Raju.Addu
  *
  */
 
+@Component
 public class AuthRequestDto {
 
 	private String userName; //mobile number.

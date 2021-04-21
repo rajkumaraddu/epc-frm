@@ -34,14 +34,17 @@ public class LeadMasterDto extends BaseEntity {
 	private String misProduct;
 	private String govtPortalRegNo;
 	private String regStatusOnGovtPortal;//
+	//status
 	private String workOrderStatus;
 	private String workOrderNo;
+	private String kycStatus;
+	private String quotationStatus;
 	private String manualApprovalTriggered;
 	private String approvalStatus;
 	private String convertedTo;
 	private String faId;
 	private String asmId;
-	private String dealerUserId;
+	private String dealerUserId;//dealer
 	private String onlinePortalStatus;
 	private String overallStatus;
 	private String estPurchaseMonth;
@@ -60,6 +63,7 @@ public class LeadMasterDto extends BaseEntity {
 
 	// kyc new entity
 	private KYCMasterEntity kycId;
+	private Long userMobile;//
 
 	// status
 	private List<InstReportPhotosEntity> instReportPhoto;
@@ -351,8 +355,34 @@ public class LeadMasterDto extends BaseEntity {
 		this.timeStamp = timeStamp;
 	}
 
+	
+	public String getKycStatus() {
+		return kycStatus;
+	}
+
+	public void setKycStatus(String kycStatus) {
+		this.kycStatus = kycStatus;
+	}
+
+	public String getQuotationStatus() {
+		return quotationStatus;
+	}
+
+	public void setQuotationStatus(String quotationStatus) {
+		this.quotationStatus = quotationStatus;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public Long getUserMobile() {
+		return userMobile;
+	}
+
+	public void setUserMobile(Long userMobile) {
+		this.userMobile = userMobile;
+	}
+	
 
 }

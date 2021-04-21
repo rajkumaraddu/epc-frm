@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.mahindra.epcfrm.serviceImpl;
+package com.mahindra.epcfrm.serviceimpl;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;

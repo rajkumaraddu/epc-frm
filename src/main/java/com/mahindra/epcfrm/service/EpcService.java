@@ -3,6 +3,7 @@
  */
 package com.mahindra.epcfrm.service;
 
+import com.mahindra.epcfrm.dto.LeadMasterDataRespDto;
 import com.mahindra.epcfrm.dto.MasterResponseDto;
 
 /**
@@ -21,5 +22,15 @@ public interface EpcService {
 	 * @return
 	 */
 	MasterResponseDto getSubsidy(int stateCode);
+
+	/**
+	 * @return
+	 */
+	MasterResponseDto getAllSubsidy();
+
+	/**
+	 * @return
+	 */
+	LeadMasterDataRespDto getLeadMasterData();
 
 }

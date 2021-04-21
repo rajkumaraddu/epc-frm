@@ -25,6 +25,8 @@ public class StateMasterEntity extends BaseEntity {
 	private int stateCode;
 	@Column(length = 100)
 	private String stateName;
+	@Column(length = 2)
+	private String shortName;
 	private int gstCode;
 	@Column(length = 10)
 	private String stateOrUT;
@@ -55,6 +57,14 @@ public class StateMasterEntity extends BaseEntity {
 		this.stateName = stateName;
 	}
 
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 	public int getGstCode() {
 		return gstCode;
 	}
@@ -82,6 +92,5 @@ public class StateMasterEntity extends BaseEntity {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
 
 }

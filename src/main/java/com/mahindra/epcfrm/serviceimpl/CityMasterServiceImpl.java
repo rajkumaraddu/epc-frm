@@ -1,4 +1,4 @@
-package com.mahindra.epcfrm.serviceImpl;
+package com.mahindra.epcfrm.serviceimpl;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.mahindra.epcfrm.dto.CityRequestDto;
 import com.mahindra.epcfrm.dto.MasterResponseDto;
 import com.mahindra.epcfrm.entity.CityMasterEntity;
-import com.mahindra.epcfrm.exception.DataNotFoundException;
 import com.mahindra.epcfrm.repository.CityMasterRepo;
 import com.mahindra.epcfrm.service.CityMasterService;
 

@@ -1,4 +1,4 @@
-package com.mahindra.epcfrm.serviceImpl;
+package com.mahindra.epcfrm.serviceimpl;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,14 +7,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import com.mahindra.epcfrm.entity.CustomerMasterEntity;
 import com.mahindra.epcfrm.entity.DeliveryChalanEntity;
 import com.mahindra.epcfrm.entity.InstReportPhotosEntity;
 import com.mahindra.epcfrm.entity.KYCMasterEntity;
@@ -22,9 +20,7 @@ import com.mahindra.epcfrm.entity.LeadMasterEntity;
 import com.mahindra.epcfrm.dto.LeadMasterDto;
 import com.mahindra.epcfrm.dto.LeadSearchDto;
 import com.mahindra.epcfrm.dto.MasterResponseDto;
-import com.mahindra.epcfrm.exception.DataNotFoundException;
 import com.mahindra.epcfrm.exception.FileStorageException;
-import com.mahindra.epcfrm.exception.ResourceAlreadyExistsException;
 import com.mahindra.epcfrm.repository.CustomerMasterRepo;
 import com.mahindra.epcfrm.repository.LeadMasterRepo;
 import com.mahindra.epcfrm.service.LeadMasterService;
@@ -51,12 +47,13 @@ public class LeadMasterServiceImpl implements LeadMasterService {
 			MultipartFile[] deliverChalan) {
 		log.info("inside leadcreation service starts");
         MasterResponseDto leadCreationRes=new MasterResponseDto();
-		Optional<CustomerMasterEntity> farmerData = customerMasterRepo
-				.findByEmailId(leadMasterDTO.getFarmerId().getEmailId());
-		if (farmerData.isPresent()) {
-			throw new ResourceAlreadyExistsException(
-					leadMasterDTO.getFarmerId().getEmailId() + " this email is already registered ");
-		} else {
+		/*
+		 * Optional<CustomerMasterEntity> farmerData = customerMasterRepo
+		 * .findByEmailId(leadMasterDTO.getFarmerId().getEmailId()); if
+		 * (farmerData.isPresent()) { throw new ResourceAlreadyExistsException(
+		 * leadMasterDTO.getFarmerId().getEmailId() +
+		 * " this email is already registered "); } else {
+		 */
 			LeadMasterEntity leadMasterEntity = new LeadMasterEntity();
 			BeanUtils.copyProperties(leadMasterDTO, leadMasterEntity);
 			System.out.println("fam " + farmerPhoto);
@@ -181,7 +178,6 @@ public class LeadMasterServiceImpl implements LeadMasterService {
 			leadCreationRes.setData(lead);
 			log.info("inside leadcreation service ended");
 			return leadCreationRes;
-		}
 	}
 
 	/*
@@ -213,17 +209,16 @@ public class LeadMasterServiceImpl implements LeadMasterService {
 		log.info("inside leadSearch service");
 		log.debug("inside leadSearch service");
 		MasterResponseDto leadSearchRes=new MasterResponseDto();
-		Optional<CustomerMasterEntity> farmerData = customerMasterRepo
-				.findByContactNumberAndEmailId(searchDTO.getContactNumber(), searchDTO.getEmailId());
-		Optional<LeadMasterEntity> leadData = leadMasterRepo.findByFarmerId(farmerData.get());
-		if (leadData.isPresent()) {
+		List<LeadMasterEntity> leadList = leadMasterRepo.findByUserMobile(searchDTO.getUserMobile());
+		log.info("leadList Count:"+leadList.size());
+		if (leadList.size()!=0) {
 			leadSearchRes.setStatusCode(0);
 			leadSearchRes.setMessage("success");
-			leadSearchRes.setData(leadData.get());
+			leadSearchRes.setData(leadList);
 			return leadSearchRes;
 		} else {
 			leadSearchRes.setStatusCode(1);
-			leadSearchRes.setMessage("Lead data not available");
+			leadSearchRes.setMessage("Lead data is not available for this user "+searchDTO.getUserMobile());
 			leadSearchRes.setData(null);
 			return leadSearchRes;
 		}

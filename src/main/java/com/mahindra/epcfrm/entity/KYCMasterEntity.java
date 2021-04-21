@@ -14,6 +14,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "KycMaster")
 public class KYCMasterEntity extends BaseEntity{
+	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5795551699030996866L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

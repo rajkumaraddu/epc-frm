@@ -5,6 +5,9 @@ package com.mahindra.epcfrm;
 
 import com.mahindra.epcfrm.filter.JwtFilter;
 import com.mahindra.epcfrm.service.CustomUserDetailsService;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +31,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
+@EnableSwagger2
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -54,7 +58,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/auth/*").permitAll().anyRequest().authenticated().and()
+		http.csrf().disable().authorizeRequests()
+		.antMatchers("/auth/*").permitAll()
+		.antMatchers("/v2/api-docs").permitAll()
+		.anyRequest().authenticated().and()
 				.exceptionHandling().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}

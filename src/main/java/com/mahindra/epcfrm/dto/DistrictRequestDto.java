@@ -1,5 +1,8 @@
 package com.mahindra.epcfrm.dto;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DistrictRequestDto {
 
 	private int stateCode;

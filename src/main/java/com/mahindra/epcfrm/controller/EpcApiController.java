@@ -13,20 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.mahindra.epcfrm.entity.CityMasterEntity;
-import com.mahindra.epcfrm.entity.CropMasterEntity;
-import com.mahindra.epcfrm.entity.DistrictMasterEntity;
-import com.mahindra.epcfrm.entity.LeadMasterEntity;
-import com.mahindra.epcfrm.entity.StateMasterEntity;
 import com.mahindra.epcfrm.dto.CityRequestDto;
 import com.mahindra.epcfrm.dto.DistrictRequestDto;
+import com.mahindra.epcfrm.dto.LeadMasterDataRespDto;
 import com.mahindra.epcfrm.dto.LeadMasterDto;
 import com.mahindra.epcfrm.dto.LeadSearchDto;
 import com.mahindra.epcfrm.dto.MasterResponseDto;
-import com.mahindra.epcfrm.dto.ResponseDto;
 import com.mahindra.epcfrm.service.CityMasterService;
 import com.mahindra.epcfrm.service.CropMasterService;
 import com.mahindra.epcfrm.service.DistrictMasterService;
@@ -113,13 +107,13 @@ public class EpcApiController {
 		return cropMasterService.getAllCrops();
 	}
 
-	@PostMapping(value = "getDistricts")
+	@GetMapping(value = "getDistricts")
 	public MasterResponseDto getDistricts(@RequestBody DistrictRequestDto reqDto) throws Exception {
 		log.info("request processing of getDistricts");
 		return districtMasterService.getDistrictsByStateWise(reqDto.getStateCode());
 	}
 
-	@PostMapping(value = "getCitiesByStateCode")
+	@GetMapping(value = "getCitiesByStateCode")
 	public MasterResponseDto getCitiesByStateCode(@RequestBody CityRequestDto reqDto) throws Exception {
 		log.info("request processing of getAllCities");
 		return cityMasterService.getCitiesByStateCode(reqDto);
@@ -140,6 +134,16 @@ public class EpcApiController {
 	@GetMapping("getSubsidy")
 	public MasterResponseDto getSubsidy(@RequestParam int stateCode) {
 		return epcService.getSubsidy(stateCode);
+	}
+
+	@GetMapping("getAllSubsidy")
+	public MasterResponseDto getAllSubsidy() {
+		return epcService.getAllSubsidy();
+	}
+	
+	@GetMapping("getLeadMasterData")
+	public LeadMasterDataRespDto getLeadMasterData() {
+		return epcService.getLeadMasterData();
 	}
 
 }
