@@ -41,8 +41,9 @@ public class LoginController {
 	@GetMapping("/get_otp")
 	public ResponseEntity<ApiResponseDto> getOtp(@RequestParam String mobile) {
 		logger.info("inside /get_otp controller, mobile: " + mobile);
-		return ResponseEntity.ok(loginService.getOtp(mobile));
+		return ResponseEntity.ok(loginService.getOtp(mobile,"User", 0, "", null));
 	}
+
 
 	@PostMapping("/login")
 	public AuthResponseDto generateToken(@RequestBody AuthRequestDto authRequest) throws Exception {

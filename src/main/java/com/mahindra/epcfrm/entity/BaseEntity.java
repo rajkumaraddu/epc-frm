@@ -68,7 +68,7 @@ public class BaseEntity implements Serializable {
 	public void beforeCreate() {
 		Date now = new Date();
 		this.createdOn = now;
-		this.createdBy = "EPC Admin";
+	//	this.createdBy = "EPC Admin";
 //		this.modifiedOn = now;
 //		setIsActive("Y");
 	}

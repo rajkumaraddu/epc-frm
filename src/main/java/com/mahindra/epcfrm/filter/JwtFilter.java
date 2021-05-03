@@ -17,6 +17,8 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 /**
@@ -37,6 +39,8 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
+    	HttpSession session = httpServletRequest.getSession();
+    	
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
 
         String token = null;
@@ -50,6 +54,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = service.loadUserByUsername("auth@"+userName);
+            session.setAttribute("loginUser", userName);
 
             if (jwtUtil.validateToken(token, userDetails)) {
 

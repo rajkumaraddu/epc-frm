@@ -5,14 +5,12 @@ package com.mahindra.epcfrm.entity;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,9 +29,23 @@ public class LeadMasterEntity extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	private FarmerMasterEntity farmerMaster;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private SiteSurveyMasterEntity siteSurveyMaster;
+		
+	@OneToOne(cascade = CascadeType.ALL)
+	private MaterialDeliveryMaster materialDeliveryMaster;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private RegistrationDetailsMasterEntity regDetailsMaster;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private MaterialInstallationMasterEntity materialInstallMaster;
+	
 	@Column(length = 50)
 	private String enquirySource;
-	// CustomerID
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private CustomerMasterEntity farmerId;
@@ -41,8 +53,9 @@ public class LeadMasterEntity extends BaseEntity {
 	@OneToOne(cascade = CascadeType.ALL)
 	private AddressMasterEntity farmerAddId;
 
-	@Column(length = 50)
-	private String communicationId;
+//	@Column(length = 50)
+//	private String communicationId;
+
 	@Column(length = 50)
 	private String cropName;
 	@Column(length = 50)
@@ -51,38 +64,43 @@ public class LeadMasterEntity extends BaseEntity {
 	private String govtPortalRegNo;
 	@Column(length = 50)
 	private String regStatusOnGovtPortal;//
-	
-	//status
+
+	// status
+
 	@Column(length = 50)
-	private String workOrderStatus;
-	@Column(length = 50)
-	private String workOrderNo;
-	
+	private String workOrderStatus;// tobedeleted
+
+	/*
+	 * @Column(length = 50) private String workOrderNo;
+	 */
 	@Column(length = 50)
 	private String kycStatus;
 	@Column(length = 50)
 	private String quotationStatus;
-	
-	@Column(length = 50)
-	private String manualApprovalTriggered;
-	@Column(length = 50)
-	private String approvalStatus;
-	@Column(length = 50)
-	private String convertedTo;
-	@Column(length = 50)
-	private String faId;
+
+	/*
+	 * @Column(length = 50) private String manualApprovalTriggered;
+	 * 
+	 * @Column(length = 50) private String approvalStatus;
+	 * 
+	 * @Column(length = 50) private String convertedTo;
+	 * 
+	 * @Column(length = 50) private String faId;
+	 */
 	@Column(length = 50)
 	private String asmId;
-	@Column(length = 50)
-	private String dealerUserId;
-	
-	
+
+	// @Column(length = 50)
+	// private String dealerUserId;
+
 	@Column(length = 50)
 	private String onlinePortalStatus;
-	@Column(length = 50)
-	private String overallStatus;
-	@Column(length = 50)
-	private String estPurchaseMonth;
+	// @Column(length = 50)
+	// private String overallStatus;
+
+	// @Column(length = 50)
+	// private String estPurchaseMonth;
+
 	@Column(length = 50)
 	private String enquiryType;
 	private double farmerContriAmt;
@@ -100,24 +118,27 @@ public class LeadMasterEntity extends BaseEntity {
 	// kyc new entity
 	@OneToOne(cascade = CascadeType.ALL)
 	private KYCMasterEntity kycId;
-	
+
 	@Column(length = 15)
 	private Long userMobile;//
-	
 
 	// status
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "instReportPhotoId")
+	//@JoinColumn(name = "instReportPhotoId")
 	private List<InstReportPhotosEntity> instReportPhoto;
 
 	private String instReportVideo;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "deliveryChalanId")
+	//@JoinColumn(name = "deliveryChalanId")
 	private List<DeliveryChalanEntity> deliveryChalan;
 
-	private String otp;
-	private String gps;
+	private Long otp;
+	// private String gps;
+
+	private double gpsLat;
+	private double gpsLong;
+
 	private String timeStamp;
 
 	public int getId() {
@@ -152,14 +173,6 @@ public class LeadMasterEntity extends BaseEntity {
 		this.kycId = kycId;
 	}
 
-	public String getCommunicationId() {
-		return communicationId;
-	}
-
-	public void setCommunicationId(String communicationId) {
-		this.communicationId = communicationId;
-	}
-
 	public String getCropName() {
 		return cropName;
 	}
@@ -192,46 +205,6 @@ public class LeadMasterEntity extends BaseEntity {
 		this.workOrderStatus = workOrderStatus;
 	}
 
-	public String getWorkOrderNo() {
-		return workOrderNo;
-	}
-
-	public void setWorkOrderNo(String workOrderNo) {
-		this.workOrderNo = workOrderNo;
-	}
-
-	public String getManualApprovalTriggered() {
-		return manualApprovalTriggered;
-	}
-
-	public void setManualApprovalTriggered(String manualApprovalTriggered) {
-		this.manualApprovalTriggered = manualApprovalTriggered;
-	}
-
-	public String getApprovalStatus() {
-		return approvalStatus;
-	}
-
-	public void setApprovalStatus(String approvalStatus) {
-		this.approvalStatus = approvalStatus;
-	}
-
-	public String getConvertedTo() {
-		return convertedTo;
-	}
-
-	public void setConvertedTo(String convertedTo) {
-		this.convertedTo = convertedTo;
-	}
-
-	public String getFaId() {
-		return faId;
-	}
-
-	public void setFaId(String faId) {
-		this.faId = faId;
-	}
-
 	public String getAsmId() {
 		return asmId;
 	}
@@ -240,36 +213,12 @@ public class LeadMasterEntity extends BaseEntity {
 		this.asmId = asmId;
 	}
 
-	public String getDealerUserId() {
-		return dealerUserId;
-	}
-
-	public void setDealerUserId(String dealerUserId) {
-		this.dealerUserId = dealerUserId;
-	}
-
 	public String getOnlinePortalStatus() {
 		return onlinePortalStatus;
 	}
 
 	public void setOnlinePortalStatus(String onlinePortalStatus) {
 		this.onlinePortalStatus = onlinePortalStatus;
-	}
-
-	public String getOverallStatus() {
-		return overallStatus;
-	}
-
-	public void setOverallStatus(String overallStatus) {
-		this.overallStatus = overallStatus;
-	}
-
-	public String getEstPurchaseMonth() {
-		return estPurchaseMonth;
-	}
-
-	public void setEstPurchaseMonth(String estPurchaseMonth) {
-		this.estPurchaseMonth = estPurchaseMonth;
 	}
 
 	public String getEnquiryType() {
@@ -380,28 +329,20 @@ public class LeadMasterEntity extends BaseEntity {
 		this.deliveryChalan = deliveryChalan;
 	}
 
-	public String getOtp() {
-		return otp;
+	public double getGpsLat() {
+		return gpsLat;
 	}
 
-	public void setOtp(String otp) {
-		this.otp = otp;
+	public void setGpsLat(double gpsLat) {
+		this.gpsLat = gpsLat;
 	}
 
-	public String getGps() {
-		return gps;
+	public double getGpsLong() {
+		return gpsLong;
 	}
 
-	public void setGps(String gps) {
-		this.gps = gps;
-	}
-
-	public String getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(String timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setGpsLong(double gpsLong) {
+		this.gpsLong = gpsLong;
 	}
 
 	public String getKycStatus() {
@@ -427,6 +368,61 @@ public class LeadMasterEntity extends BaseEntity {
 	public void setUserMobile(Long userMobile) {
 		this.userMobile = userMobile;
 	}
-	
 
+	public Long getOtp() {
+		return otp;
+	}
+
+	public void setOtp(Long otp) {
+		this.otp = otp;
+	}
+
+	public String getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(String timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public FarmerMasterEntity getFarmerMaster() {
+		return farmerMaster;
+	}
+
+	public void setFarmerMaster(FarmerMasterEntity farmerMaster) {
+		this.farmerMaster = farmerMaster;
+	}
+
+	public SiteSurveyMasterEntity getSiteSurveyMaster() {
+		return siteSurveyMaster;
+	}
+
+	public void setSiteSurveyMaster(SiteSurveyMasterEntity siteSurveyMaster) {
+		this.siteSurveyMaster = siteSurveyMaster;
+	}
+
+	public MaterialDeliveryMaster getMaterialDeliveryMaster() {
+		return materialDeliveryMaster;
+	}
+
+	public void setMaterialDeliveryMaster(MaterialDeliveryMaster materialDeliveryMaster) {
+		this.materialDeliveryMaster = materialDeliveryMaster;
+	}
+
+	public RegistrationDetailsMasterEntity getRegDetailsMaster() {
+		return regDetailsMaster;
+	}
+
+	public void setRegDetailsMaster(RegistrationDetailsMasterEntity regDetailsMaster) {
+		this.regDetailsMaster = regDetailsMaster;
+	}
+
+	public MaterialInstallationMasterEntity getMaterialInstallMaster() {
+		return materialInstallMaster;
+	}
+
+	public void setMaterialInstallMaster(MaterialInstallationMasterEntity materialInstallMaster) {
+		this.materialInstallMaster = materialInstallMaster;
+	}	
+	
 }

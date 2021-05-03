@@ -9,7 +9,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "InstReportPhotos")
-public class InstReportPhotosEntity {
+public class InstReportPhotosEntity extends BaseEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 773860676692114603L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

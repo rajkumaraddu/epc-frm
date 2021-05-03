@@ -9,7 +9,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DeliveryChalan")
-public class DeliveryChalanEntity {
+public class DeliveryChalanEntity extends BaseEntity{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -765885099170490701L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

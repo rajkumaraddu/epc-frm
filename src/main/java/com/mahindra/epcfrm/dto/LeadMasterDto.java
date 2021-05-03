@@ -29,25 +29,25 @@ public class LeadMasterDto extends BaseEntity {
 
 	private AddressMasterEntity farmerAddId;
 
-	private String communicationId;
+	// private String communicationId;
 	private String cropName;
 	private String misProduct;
 	private String govtPortalRegNo;
 	private String regStatusOnGovtPortal;//
-	//status
+	// status
 	private String workOrderStatus;
-	private String workOrderNo;
+	// private String workOrderNo;
 	private String kycStatus;
 	private String quotationStatus;
-	private String manualApprovalTriggered;
-	private String approvalStatus;
-	private String convertedTo;
-	private String faId;
+	/*
+	 * private String manualApprovalTriggered; private String approvalStatus;
+	 * private String convertedTo; private String faId;
+	 */
 	private String asmId;
-	private String dealerUserId;//dealer
+	// private String dealerUserId;//dealer
 	private String onlinePortalStatus;
-	private String overallStatus;
-	private String estPurchaseMonth;
+	// private String overallStatus;
+	// private String estPurchaseMonth;
 	private String enquiryType;
 	private double farmerContriAmt;
 	private double subsidyPct;
@@ -71,8 +71,12 @@ public class LeadMasterDto extends BaseEntity {
 
 	private List<DeliveryChalanEntity> deliveryChalan;
 
-	private String otp;
-	private String gps;
+	private Long otp;
+	// private String gps;
+
+	private double gpsLat;
+	private double gpsLong;
+
 	private String timeStamp;
 
 	public int getId() {
@@ -105,14 +109,6 @@ public class LeadMasterDto extends BaseEntity {
 
 	public void setFarmerAddId(AddressMasterEntity farmerAddId) {
 		this.farmerAddId = farmerAddId;
-	}
-
-	public String getCommunicationId() {
-		return communicationId;
-	}
-
-	public void setCommunicationId(String communicationId) {
-		this.communicationId = communicationId;
 	}
 
 	public String getCropName() {
@@ -155,46 +151,6 @@ public class LeadMasterDto extends BaseEntity {
 		this.workOrderStatus = workOrderStatus;
 	}
 
-	public String getWorkOrderNo() {
-		return workOrderNo;
-	}
-
-	public void setWorkOrderNo(String workOrderNo) {
-		this.workOrderNo = workOrderNo;
-	}
-
-	public String getManualApprovalTriggered() {
-		return manualApprovalTriggered;
-	}
-
-	public void setManualApprovalTriggered(String manualApprovalTriggered) {
-		this.manualApprovalTriggered = manualApprovalTriggered;
-	}
-
-	public String getApprovalStatus() {
-		return approvalStatus;
-	}
-
-	public void setApprovalStatus(String approvalStatus) {
-		this.approvalStatus = approvalStatus;
-	}
-
-	public String getConvertedTo() {
-		return convertedTo;
-	}
-
-	public void setConvertedTo(String convertedTo) {
-		this.convertedTo = convertedTo;
-	}
-
-	public String getFaId() {
-		return faId;
-	}
-
-	public void setFaId(String faId) {
-		this.faId = faId;
-	}
-
 	public String getAsmId() {
 		return asmId;
 	}
@@ -203,36 +159,12 @@ public class LeadMasterDto extends BaseEntity {
 		this.asmId = asmId;
 	}
 
-	public String getDealerUserId() {
-		return dealerUserId;
-	}
-
-	public void setDealerUserId(String dealerUserId) {
-		this.dealerUserId = dealerUserId;
-	}
-
 	public String getOnlinePortalStatus() {
 		return onlinePortalStatus;
 	}
 
 	public void setOnlinePortalStatus(String onlinePortalStatus) {
 		this.onlinePortalStatus = onlinePortalStatus;
-	}
-
-	public String getOverallStatus() {
-		return overallStatus;
-	}
-
-	public void setOverallStatus(String overallStatus) {
-		this.overallStatus = overallStatus;
-	}
-
-	public String getEstPurchaseMonth() {
-		return estPurchaseMonth;
-	}
-
-	public void setEstPurchaseMonth(String estPurchaseMonth) {
-		this.estPurchaseMonth = estPurchaseMonth;
 	}
 
 	public String getEnquiryType() {
@@ -331,31 +263,22 @@ public class LeadMasterDto extends BaseEntity {
 		this.deliveryChalan = deliveryChalan;
 	}
 
-	public String getOtp() {
-		return otp;
+	public double getGpsLat() {
+		return gpsLat;
 	}
 
-	public void setOtp(String otp) {
-		this.otp = otp;
+	public void setGpsLat(double gpsLat) {
+		this.gpsLat = gpsLat;
 	}
 
-	public String getGps() {
-		return gps;
+	public double getGpsLong() {
+		return gpsLong;
 	}
 
-	public void setGps(String gps) {
-		this.gps = gps;
+	public void setGpsLong(double gpsLong) {
+		this.gpsLong = gpsLong;
 	}
 
-	public String getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(String timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	
 	public String getKycStatus() {
 		return kycStatus;
 	}
@@ -383,6 +306,21 @@ public class LeadMasterDto extends BaseEntity {
 	public void setUserMobile(Long userMobile) {
 		this.userMobile = userMobile;
 	}
-	
+
+	public Long getOtp() {
+		return otp;
+	}
+
+	public void setOtp(Long otp) {
+		this.otp = otp;
+	}
+
+	public String getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(String timeStamp) {
+		this.timeStamp = timeStamp;
+	}
 
 }

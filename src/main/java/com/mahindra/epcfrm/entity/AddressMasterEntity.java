@@ -22,12 +22,13 @@ public class AddressMasterEntity extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@Column(length = 50)
-	private String addressNo;
-	@Column(length = 20)
-	private String addressType;
-	@Column(length = 50)
-	private String customerNo;
+	/*
+	 * @Column(length = 50) private String addressNo;
+	 * 
+	 * @Column(length = 20) private String addressType;
+	 * 
+	 * @Column(length = 50) private String customerNo;
+	 */
 	@Column(length = 500)
 	private String addressLine1;
 	@Column(length = 500)
@@ -45,39 +46,15 @@ public class AddressMasterEntity extends BaseEntity {
 	@Column(length = 6)
 	private int pinCode;
 	private double area_Ha; // in case type of address is Farm;
-	@Column(length = 1)
-	private String activeStatus;
-
+	/*
+	 * @Column(length = 1) private String activeStatus;
+	 */
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getAddressNo() {
-		return addressNo;
-	}
-
-	public void setAddressNo(String addressNo) {
-		this.addressNo = addressNo;
-	}
-
-	public String getAddressType() {
-		return addressType;
-	}
-
-	public void setAddressType(String addressType) {
-		this.addressType = addressType;
-	}
-
-	public String getCustomerNo() {
-		return customerNo;
-	}
-
-	public void setCustomerNo(String customerNo) {
-		this.customerNo = customerNo;
 	}
 
 	public String getAddressLine1() {
@@ -152,12 +129,5 @@ public class AddressMasterEntity extends BaseEntity {
 		this.pinCode = pinCode;
 	}
 
-	public String getActiveStatus() {
-		return activeStatus;
-	}
-
-	public void setActiveStatus(String activeStatus) {
-		this.activeStatus = activeStatus;
-	}
 
 }

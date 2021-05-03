@@ -13,8 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "KycMaster")
-public class KYCMasterEntity extends BaseEntity{
-	
+public class KYCMasterEntity extends BaseEntity {
 
 	/**
 	 * 
@@ -25,8 +24,13 @@ public class KYCMasterEntity extends BaseEntity{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	private int leadId;
+	
 	@Column(length = 50)
 	private String kycNo;
+
+	@Column(length = 12)
+	private String aadharNo;
 
 	@Column(length = 100)
 	private String farmerPhoto;
@@ -50,86 +54,124 @@ public class KYCMasterEntity extends BaseEntity{
 	private String gpsCaptureImage;
 	@Column(length = 100)
 	private String otherDoc;
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getKycNo() {
 		return kycNo;
 	}
+
 	public void setKycNo(String kycNo) {
 		this.kycNo = kycNo;
 	}
+
 	public String getFarmerPhoto() {
 		return farmerPhoto;
 	}
+
 	public void setFarmerPhoto(String farmerPhoto) {
 		this.farmerPhoto = farmerPhoto;
 	}
+
 	public String getWaterTestDoc() {
 		return waterTestDoc;
 	}
+
 	public void setWaterTestDoc(String waterTestDoc) {
 		this.waterTestDoc = waterTestDoc;
 	}
+
 	public String getSoilTestDoc() {
 		return soilTestDoc;
 	}
+
 	public void setSoilTestDoc(String soilTestDoc) {
 		this.soilTestDoc = soilTestDoc;
 	}
+
 	public String getBankDoc() {
 		return bankDoc;
 	}
+
 	public void setBankDoc(String bankDoc) {
 		this.bankDoc = bankDoc;
 	}
+
 	public String getAadharCard() {
 		return aadharCard;
 	}
+
 	public void setAadharCard(String aadharCard) {
 		this.aadharCard = aadharCard;
 	}
+
 	public String getRationCard() {
 		return rationCard;
 	}
+
 	public void setRationCard(String rationCard) {
 		this.rationCard = rationCard;
 	}
+
 	public String getPatta() {
 		return patta;
 	}
+
 	public void setPatta(String patta) {
 		this.patta = patta;
 	}
+
 	public String getChitta() {
 		return chitta;
 	}
+
 	public void setChitta(String chitta) {
 		this.chitta = chitta;
 	}
+
 	public String getSurveyCaptureImage() {
 		return surveyCaptureImage;
 	}
+
 	public void setSurveyCaptureImage(String surveyCaptureImage) {
 		this.surveyCaptureImage = surveyCaptureImage;
 	}
+
 	public String getGpsCaptureImage() {
 		return gpsCaptureImage;
 	}
+
 	public void setGpsCaptureImage(String gpsCaptureImage) {
 		this.gpsCaptureImage = gpsCaptureImage;
 	}
+
 	public String getOtherDoc() {
 		return otherDoc;
 	}
+
 	public void setOtherDoc(String otherDoc) {
 		this.otherDoc = otherDoc;
 	}
-	
-	
 
+	public String getAadharNo() {
+		return aadharNo;
+	}
+
+	public void setAadharNo(String aadharNo) {
+		this.aadharNo = aadharNo;
+	}
+
+	public int getLeadId() {
+		return leadId;
+	}
+
+	public void setLeadId(int leadId) {
+		this.leadId = leadId;
+	}
 }

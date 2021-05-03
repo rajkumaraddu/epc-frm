@@ -8,13 +8,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.mahindra.epcfrm.dto.ApiResponseDto;
+import com.mahindra.epcfrm.dto.CreateUpdateRespDto;
+import com.mahindra.epcfrm.entity.FormerOtpHistoryEntity;
 import com.mahindra.epcfrm.entity.UserMasterEntity;
+import com.mahindra.epcfrm.repository.FormerOtpHistoryRepo;
 import com.mahindra.epcfrm.repository.UserMasterRepo;
 import com.mahindra.epcfrm.service.LoginService;
 import com.mahindra.epcfrm.service.SMSService;
@@ -30,15 +36,20 @@ public class LoginServiceImpl implements LoginService {
 	private SMSService smsService;
 	@Autowired
 	private UserMasterRepo userRepo;
+	@Autowired
+	FormerOtpHistoryRepo otpRepo;
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
 	private static Random random = new Random();
-	public static final int otpValiditySecs = 120;
+	public static final int OTPVALIDITYSECS = 120;
+	public static final String TOOMANYREQ = "toomanyreq";
+	private String logedinUser = "EPC-User";
 
 	@Override
-	public ApiResponseDto getOtp(String mobile) {
+	public ApiResponseDto getOtp(String mobile, String userType, int leadId, String otpType, HttpSession session) {
+		logedinUser = session != null ? (String) session.getAttribute("loginUser") : "Admin";
 		long curMillis = System.currentTimeMillis();
-		logger.info("inside getOtp() for mobile: " + mobile);
+		logger.info("inside getOtp() for mobile: {}", mobile);
 		if (mobile == null || mobile.isEmpty()) {
 			logger.info("Empty mobile provided, returning..");
 			return new ApiResponseDto("fail", 1, mobile, null, "Provide mandatory fields");
@@ -62,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
 			}
 
 			UserMasterEntity user = userRepo.findByMobile(mobile);
-			if (user == null) {
+			if ("User".equalsIgnoreCase(userType) && user == null) {
 				ApiResponseDto responseDto = new ApiResponseDto("no-user", 1, "",
 						"XXXX" + mobile.substring(mobLen - 3, mobLen), "", "", "User not available.");
 				logger.info("Returing resonse: " + responseDto);
@@ -72,31 +83,37 @@ public class LoginServiceImpl implements LoginService {
 			try {
 				otp = "" + (10000 + random.nextInt(90000));
 				logger.info("Generated OTP: " + otp);
-				otpValidity = LocalDateTime.now().plusSeconds(otpValiditySecs).toString();
+				otpValidity = LocalDateTime.now().plusSeconds(OTPVALIDITYSECS).toString();
 
-				String sms = otp + " is the OTP to reset your Mahindra login id password, valid till " + otpValidity;
-				try {
-					if (!updateUserOTP(mobile, otp, otpValidity)) {
+				// String sms = otp + " is the OTP to reset your Mahindra login id password,
+				// valid till " + otpValidity;
+				String sms = "";
+
+				if ("Former".equalsIgnoreCase(userType)) {
+					otp = this.getFormerHistoryOtp(leadId, mobile, otpType, otp);
+
+					sms = "*Mahindra NT Account* " + otp
+							+ " is the OTP to reset your Mahindra Domain password, valid till " + otpValidity;
+
+				} else if ("User".equalsIgnoreCase(userType)) {
+					sms = "*Mahindra NT Account* " + otp
+							+ " is the OTP to reset your Mahindra Domain password, valid till " + otpValidity;
+
+					if (!updateUserOtp(mobile, otp, otpValidity)) {
 						ApiResponseDto responseDto = new ApiResponseDto("db-issue", 1, "",
 								"XXXX" + mobile.substring(mobLen - 3, mobLen), "", "", "Please try after sometime.");
-						logger.info("Returing resonse: " + responseDto);
+						logger.info("Returing resonse: {}", responseDto);
 						return responseDto;
 					}
-					if (smsService.sendSMS(mobile, sms)) {
-						logger.info("OTP sent successfully to Mobile No. " + mobile + ", with SMS text: " + sms);
-						status = "success";
-						statusCode = 0;
-						message = "OTP is sent to Mobile No. ending with XXXX" + mobile.substring(mobLen - 3, mobLen);
-						// updateUserOTP(mobile, otp, otpValidity);
-					} else {
-						logger.info("Failed to send OTP on Mobile No. " + mobile + ", with SMS text: " + sms);
-						status = "fail";
-						statusCode = 1;
-						message = "Failed to sent OTP to Mobile No. ending with XXXX"
-								+ mobile.substring(mobLen - 3, mobLen);
-					}
-				} catch (Exception e) {
-					logger.error("Exception in SMSService.sendSms(), details: " + e.getMessage() + ", trace: ", e);
+				}
+
+				if (smsService.sendSMS(mobile, sms)) {
+					logger.info("OTP sent successfully to Mobile No. " + mobile + ", with SMS text: " + sms);
+					status = "success";
+					statusCode = 0;
+					message = "OTP is sent to Mobile No. ending with XXXX" + mobile.substring(mobLen - 3, mobLen);
+				} else {
+					logger.info("Failed to send OTP on Mobile No. " + mobile + ", with SMS text: " + sms);
 					status = "fail";
 					statusCode = 1;
 					message = "Failed to sent OTP to Mobile No. ending with XXXX"
@@ -128,11 +145,34 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	/**
+	 * @param leadId
+	 * @param mobile
+	 * @param otp
+	 * @param otpValidity
+	 * @return
+	 */
+	private String getFormerHistoryOtp(int leadId, String mobile, String otpType, String otp) {
+		FormerOtpHistoryEntity otpEntity = otpRepo.getFormerOtp(leadId, mobile, otpType);
+		if (otpEntity == null) {
+			FormerOtpHistoryEntity saveOtp = new FormerOtpHistoryEntity();
+			saveOtp.setFormarMobileNo(mobile);
+			saveOtp.setCreatedBy(logedinUser);
+			saveOtp.setLeadId(leadId);
+			saveOtp.setOtp(otp);
+			saveOtp.setOtyType(otpType);
+			otpRepo.save(saveOtp);
+		} else {
+			otp = otpEntity.getOtp();
+		}
+		return otp;
+	}
+
+	/**
 	 * @param mobile
 	 * @param otp
 	 * @param otpValidity
 	 */
-	private boolean updateUserOTP(String mobile, String otp, String otpValidity) {
+	private boolean updateUserOtp(String mobile, String otp, String otpValidity) {
 		try {
 			UserMasterEntity user = userRepo.findByMobile(mobile);
 			if (user != null) {
@@ -151,8 +191,23 @@ public class LoginServiceImpl implements LoginService {
 	public static Date getValidity(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		calendar.add(Calendar.SECOND, otpValiditySecs);
+		calendar.add(Calendar.SECOND, OTPVALIDITYSECS);
 		return calendar.getTime();
+	}
+
+	@Override
+	public CreateUpdateRespDto validateFormerOtp(String mobile, int leadId, String otp, String otpType,
+			HttpSession session) {
+		CreateUpdateRespDto resp = new CreateUpdateRespDto();
+		FormerOtpHistoryEntity otpEntity = otpRepo.validateFormerOtp(leadId, mobile, otp, otpType);
+		if (otpEntity == null) {
+			resp.setStatusCode(1);
+			resp.setMessage("OTP: '"+ otp +", is not valid. Please get the valid OTP from former or recheck the entered one ");
+		}else {
+			resp.setStatusCode(0);
+			resp.setMessage("OTP: '"+ otp +"' validated successfully");
+		}
+		return resp;
 	}
 
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.mahindra.epcfrm.entity;
 
 import javax.persistence.Column;
@@ -11,31 +8,33 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author Raju.Addu
+ * @author Birla.Manoj
  *
  */
 @Entity
-@Table(name = "CustomerMaster")
-public class CustomerMasterEntity extends BaseEntity {
+@Table(name = "FarmerMaster")
+public class FarmerMasterEntity extends BaseEntity{
 
-	private static final long serialVersionUID = 5686625583496930432L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3363616312800418064L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
 	@Column(length = 50)
 	private String sal;
 	
-	//private String customerId;
-	
 	@Column(length = 50)
 	private String firstName;
-	//@Column(length = 50)
-	//private String middleName;
+	
 	@Column(length = 50)
 	private String lastName;
-	@Column(length = 150)
-	private String fullName;
+	
+	@Column(length = 20)
+	private Long faMobile;
 	
 	@Column(length = 150)
 	private String emailId;
@@ -48,7 +47,7 @@ public class CustomerMasterEntity extends BaseEntity {
 	
 	
 	@Column(length = 150)
-	private String asm;
+	private String asmName;
 	
 	@Column(length = 150)
 	private String dealerName;
@@ -56,20 +55,12 @@ public class CustomerMasterEntity extends BaseEntity {
 	@Column(length = 150)
 	private String dealerCode;
 	
-	
-	
-	@Column(length = 20)
-	private Long contactNumber;
-	
-	/*
-	 * @Column(length = 50) private String corrAddressNo; // correspondenceAddressNo
-	 * 
-	 * @Column(length = 50) private String farmAddressNo;
-	 */
-	
 	@Column(length = 50)
 	private String sapFarmerCode;//sapFarmerCode
 	
+	@Column(length = 50)
+	private String statusOnlinePortal;
+
 	public int getId() {
 		return id;
 	}
@@ -77,6 +68,15 @@ public class CustomerMasterEntity extends BaseEntity {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	public String getSal() {
+		return sal;
+	}
+
+	public void setSal(String sal) {
+		this.sal = sal;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -85,7 +85,6 @@ public class CustomerMasterEntity extends BaseEntity {
 		this.firstName = firstName;
 	}
 
-	
 	public String getLastName() {
 		return lastName;
 	}
@@ -94,20 +93,12 @@ public class CustomerMasterEntity extends BaseEntity {
 		this.lastName = lastName;
 	}
 
-	public String getFullName() {
-		return fullName;
+	public Long getFaMobile() {
+		return faMobile;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public Long getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(Long contactNumber) {
-		this.contactNumber = contactNumber;
+	public void setFaMobile(Long faMobile) {
+		this.faMobile = faMobile;
 	}
 
 	public String getEmailId() {
@@ -134,12 +125,16 @@ public class CustomerMasterEntity extends BaseEntity {
 		this.motherName = motherName;
 	}
 
-	public String getAsm() {
-		return asm;
+	public String getAsmName() {
+		return asmName;
 	}
 
-	public void setAsm(String asm) {
-		this.asm = asm;
+	public void setAsmName(String asmName) {
+		this.asmName = asmName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getDealerName() {
@@ -166,9 +161,12 @@ public class CustomerMasterEntity extends BaseEntity {
 		this.sapFarmerCode = sapFarmerCode;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getStatusOnlinePortal() {
+		return statusOnlinePortal;
 	}
 
+	public void setStatusOnlinePortal(String statusOnlinePortal) {
+		this.statusOnlinePortal = statusOnlinePortal;
+	}
 	
 }
