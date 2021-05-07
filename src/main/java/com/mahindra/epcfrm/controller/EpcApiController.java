@@ -82,7 +82,7 @@ public class EpcApiController {
 		return "Welcome to EPC!";
 	}
 
-	@GetMapping("/getFormerOtp")
+	@PostMapping("/getFormerOtp")
 	public ResponseEntity<CreateUpdateRespDto> getFormerOtp(@RequestBody FormerOtpRequestDto formerReqDto,
 			HttpSession session) {
 		ApiResponseDto apiRespDto = null;
@@ -102,7 +102,7 @@ public class EpcApiController {
 		return ResponseEntity.ok(resp);
 	}
 	
-	@GetMapping("/validateFormerOtp")
+	@PostMapping("/validateFormerOtp")
 	public ResponseEntity<CreateUpdateRespDto> validateFormerOtp(@RequestBody FormerOtpRequestDto formerReqDto,
 			HttpSession session){
 		int leadId = formerReqDto.getLeadId();
